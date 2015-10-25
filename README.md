@@ -1,7 +1,8 @@
 # phobos-mcollective
 
 Avant de commencer, assurez d'avoir installer les dépôts Puppetlabs:
-# https://docs.puppetlabs.com/guides/puppetlabs_package_repositories.html
+
+https://docs.puppetlabs.com/guides/puppetlabs_package_repositories.html
 
 
 
@@ -12,7 +13,7 @@ La premiere étape est d'installer un middleware (RabbitMQ ou encore ActiveMQ) q
 
 L'installation de base des broker RabbitMQ et ActiveMQ sont hors du champ de ce document. Vous pouvez consulter mon module d'installation RabbitMQ:
 
-# https://github.com/dl-puppet/phobos-rabbitmq
+https://github.com/dl-puppet/phobos-rabbitmq
 
 Après avoir installer votre broker, vous devez configurer les trois éléments suivants:
 -exchanges
@@ -21,19 +22,21 @@ Après avoir installer votre broker, vous devez configurer les trois éléments 
 
 D'abord nous créons un hôte virtuel, deux utilisateurs (un pour agir en tant qu'administrateur qui créera les échanges que nous avons besoin plus tard) et certaines autorisations sur le serveur virtuel:
 
-# rabbitmqadmin declare vhost name=/mcollective
-# rabbitmqadmin declare user name=mcollective password=xxxxxxxx tags=user
-# rabbitmqadmin declare user name=admin password=xxxxxxxx tags=administrator
-# rabbitmqadmin declare permission vhost=/mcollective user=mcollective configure='.*' write='.*' read='.*'
-# rabbitmqadmin declare permission vhost=/mcollective user=admin configure='.*' write='.*' read='.*'
+...
+rabbitmqadmin declare vhost name=/mcollective
+rabbitmqadmin declare user name=mcollective password=xxxxxxxx tags=user
+rabbitmqadmin declare user name=admin password=xxxxxxxx tags=administrator
+rabbitmqadmin declare permission vhost=/mcollective user=mcollective configure='.*' write='.*' read='.*'
+rabbitmqadmin declare permission vhost=/mcollective user=admin configure='.*' write='.*' read='.*'
+...
 
 Et puis, nous devons créer "les échanges" qui sont nécessaires pour chaque collective:
-
-# for collective in mcollective ; do
-#  rabbitmqadmin declare exchange --user=admin --password=xxxxxxx --vhost=/mcollective name=${collective}_broadcast type=topic
-#  rabbitmqadmin declare exchange --user=admin --password=xxxxxxx --vhost=/mcollective name=${collective}_directed type=direct
-#done
-
+...
+for collective in mcollective ; do
+  rabbitmqadmin declare exchange --user=admin --password=xxxxxxx --vhost=/mcollective name=${collective}_broadcast type=topic
+  rabbitmqadmin declare exchange --user=admin --password=xxxxxxx --vhost=/mcollective name=${collective}_directed type=direct
+done
+...
 
 
 
@@ -42,21 +45,24 @@ Génération des Keys :
 ############################################
 
 La seconde étape consiste à generer trois mot de passe : 
-
-# openssl rand -base64 32
+...
+openssl rand -base64 32
+...
 
 1er password: mot de passe  client pour la connection au middleware avec les permissions d'utiliser des commandes sur le servers hosts. Il est configuré dans le fichier de /etc/activemq/activemq.xml et utilisé pour l'option 'plugin.XXXXXX.pool.1.password' dans /etc/mcollective/client.cfg. Vous pouvez le renseigner dans hiera par :
-
-# mcollective::middlle_pwdclient:        "pwdclient"
+...
+mcollective::middlle_pwdclient:        "pwdclient"
+...
 
 2eme password: mot de passe utilisé par les serveurs pour ce connecter au broker avec des autorisations d'abonnement aux chaines de commandement. Il est configuré dans le fichier de /etc/activemq/activemq.xml et utilisé pour plugin.XXXXXX.pool.1.password dans /etc/mcollective/server.cfg. Vous pouvez le renseigner dans hiera par :
-
-# mcollective::middlle_pwdserveur:       "pwdserveur"
+...
+mcollective::middlle_pwdserveur:       "pwdserveur"
+...
 
 3eme passsword: la key pré-partagé utilisé comme un sel dans le hachage cryptographique qui est utilisé pour valider les communications entre le serveur et le client. Il est configuré avec la variable "plugin.psk" à la fois dans /etc/mcollective/server.cfg et /etc/mcofllective/client.cfg
-
-# mcollective::middlle_Keypsk:           "Keypsk"
-
+...
+mcollective::middlle_Keypsk:           "Keypsk"
+...
 
 
 
