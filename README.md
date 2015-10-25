@@ -22,21 +22,21 @@ Après avoir installer votre broker, vous devez configurer les trois éléments 
 
 D'abord nous créons un hôte virtuel, deux utilisateurs (un pour agir en tant qu'administrateur qui créera les échanges que nous avons besoin plus tard) et certaines autorisations sur le serveur virtuel:
 
-...
+<blockquote>
 rabbitmqadmin declare vhost name=/mcollective
 rabbitmqadmin declare user name=mcollective password=xxxxxxxx tags=user
 rabbitmqadmin declare user name=admin password=xxxxxxxx tags=administrator
 rabbitmqadmin declare permission vhost=/mcollective user=mcollective configure='.*' write='.*' read='.*'
 rabbitmqadmin declare permission vhost=/mcollective user=admin configure='.*' write='.*' read='.*'
-...
+</blockquote>
 
 Et puis, nous devons créer "les échanges" qui sont nécessaires pour chaque collective:
-...
+<blockquote>
 for collective in mcollective ; do
   rabbitmqadmin declare exchange --user=admin --password=xxxxxxx --vhost=/mcollective name=${collective}_broadcast type=topic
   rabbitmqadmin declare exchange --user=admin --password=xxxxxxx --vhost=/mcollective name=${collective}_directed type=direct
 done
-...
+</blockquote>
 
 
 
