@@ -1,0 +1,125 @@
+###################################################################################################
+##	doit être installé uniquement sur l'hote à partir duquel vous pourrez contrloer votre parc.
+###################################################################################################
+
+# Advanced settings and platform defaults:
+# -----------------------------------
+libdir = /usr/libexec/mcollective
+#rpchelptemplate 								= 		/etc/mcollective/rpc-help.erb
+#helptemplatedir 								= 		/etc/mcollective
+#ssl_cipher 									= 		aes-256-cbc
+#identity 										= 		fqdn
+
+# ------------------------------------------
+# CONFIGURATION MCOMASTER
+# ------------------------------------------
+#plugin.redis.host 								= 		localhost
+#plugin.redis.port 								= 		6379
+#plugin.redis.db 								= 		0
+
+
+# ------------------------------------------
+# Subcollectives (optional):
+# ------------------------------------------
+#collectives 									= 		mcollective
+#main_collective 								= 		mcollective
+
+
+# -----------------------------------
+# CONFIGURATION MIDDLEWARE 
+# -----------------------------------
+# Mcollective utilise toujours le protocole STOMP lors de la connexion avec les broker (Middleware/ActiveMQ), 
+# mais cela ne figure pas dans ca configuration. Dans la configuration du broker, vous ne mentionnez pas mcollective
+# mais dites au transport Connector de fournir un protocole de transport 'STOMP'.
+# Lorsque vous faites une recherche sur Internet, vous pouvez trouver des références à un connecteur STOMP. 
+# Ce connecteur a été déconseillée et retiré à partir de mcollective 2.2.3.
+# Utilisez toujours les connecteurs ActiveMQ ou RabbitMQ : 
+
+#connector => établir un lien avec le middleware et de s'enregistrer et publier dans des topics.
+connector 										= 		<%= scope['middlle_connector'] %>
+direct_addressing 								= 		1
+plugin.<%= scope['connector'] %>.vhost 			= 		<%= scope['middlle_vhost'] %>
+plugin.<%= scope['connector'] %>.pool.size 		= 		1
+plugin.<%= scope['connector'] %>.pool.1.host 	= 		<%= @fqdn %>
+plugin.<%= scope['connector'] %>.pool.1.port 	= 		<%= scope['middlle_port'] %>
+plugin.<%= scope['connector'] %>.pool.1.user 	= 		<%= scope['middlle_user'] %>
+plugin.<%= scope['connector'] %>.pool.1.password = 		<%= scope['middlle_password'] %>
+
+# Send heartbeats in 30 second intervals. This is the shortest supported period.
+plugin.rabbitmq.heartbeat_interval 				= 		30
+
+
+# -----------------------------------
+# CONFIGURATION MIDDLEWARE FOR CLUSTERING
+# -----------------------------------
+# By default if heartbeat_interval is set it will request STOMP 1.1 but support fallback
+# to 1.0, but you can enable strict STOMP 1.1 only operation by disabling 1.0 fallback
+#plugin.rabbitmq.stomp_1_0_fallback 			= 		0
+
+# Maximum amount of heartbeat read failures before retrying. 0 means never retry.
+#plugin.rabbitmq.max_hbread_fails 				= 		2
+
+# Maxium amount of heartbeat lock obtain failures before retrying. 0 means never retry.
+#plugin.rabbitmq.max_hbrlck_fails 				= 		0
+
+
+# -----------------------------------
+# CONFIGURATION MIDDLEWARE FOR USING SSL
+# -----------------------------------
+#plugin.rabbitmq.pool.1.ssl 					= 		1
+#plugin.rabbitmq.pool.1.ssl.ca 					= 		/var/lib/puppet/ssl/certs/ca.pem
+#plugin.rabbitmq.pool.1.ssl.cert 				= 		/var/lib/puppet/ssl/certs/pc-phobos.localdomain.pem
+#plugin.rabbitmq.pool.1.ssl.key 				= 		/var/lib/puppet/ssl/private_keys/pc-phobos.localdomain.pem
+#plugin.rabbitmq.pool.1.ssl.fallback 			= 		0
+#plugin.rabbitmq.use_reply_exchange 			= 		true
+
+
+# -----------------------------------
+#SECURITY PLUGIN SETTINGS PSK ,SSL ou AES_SECURITY
+# -----------------------------------
+securityprovider 								= 		psk #plugin de sécurité pour encrypter et décrypter les communications
+
+# SSL plugin settings:
+#plugin.ssl_server_public 						= 		/Users/nick/mcollective.d/credentials/certs/mcollective-servers.pem
+#plugin.ssl_client_private 						= 		/Users/nick/mcollective.d/credentials/private_keys/nick-mco.pem
+#plugin.ssl_client_public 						= 		/Users/nick/mcollective.d/credentials/certs/nick-mco.pem
+
+# PSK plugin settings: (unset)
+plugin.psk 										= 		password_psk
+
+
+# -----------------------------------
+# USE AUTO-DISCOVERY  (mc, Flatfile ou stdin
+# -----------------------------------
+default_discovery_method 						= 		mc
+direct_addressing_threshold 					= 		10
+#default_discovery_options 						= 		/etc/mcollective/nodes.txt
+ttl 											= 		60
+#discovery_timeout 								= 		5
+#publish_timeout 								= 		2
+#threaded 										= 		false
+#connection_timeout 							= 		3
+
+
+# -----------------------------------
+# Miscellaneous settings: 'First ou random'
+# -----------------------------------
+color 											= 		1
+rpclimitmethod 									= 		first
+
+
+# Facts
+# -----------------------------------
+#factsource 									= 		yaml
+#plugin.yaml 									= 		/etc/mcollective/facts.yaml
+
+
+# ------------------------------------------
+# Logging:
+# ------------------------------------------
+logger_type 									= 		file
+loglevel 										= 		warn
+logfile 										= 		/var/log/mcollective.log
+keeplogs 										= 		5
+max_log_size 									= 		2097152
+logfacility 									= 		daemon   # = user

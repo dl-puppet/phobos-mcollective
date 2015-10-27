@@ -1,0 +1,127 @@
+###########################################################################################################
+##	Le texte suivant est le fichier de configuration du serveur mcollective, qui sera installé sur chaque hôte 		
+##	que vous souhaitez contrôler. Notez que vous pouvez remplacer deux des mots de passe dans ce fichier et aussi	
+##	le répertoire de libdir.																						
+###########################################################################################################
+
+# -----------------------------------
+# Platform defaults:
+# -----------------------------------
+daemonize 										= 		1
+#activate_agents 								= 		true
+#soft_shutdown 									= 		false
+#soft_shutdown_timeout 							= 		5
+libdir 											= 		<%= scope['middlle_libdir'] %>
+#ssl_cipher 									= 		aes-256-cbc
+
+
+# ------------------------------------------
+# Subcollectives (optional):
+# ------------------------------------------
+#collectives 									= 		mcollective
+#main_collective 								= 		mcollective
+
+
+# -----------------------------------
+# CONFIGURATION MIDDLEWARE
+# -----------------------------------
+connector 												= 		<%= scope['middlle_connector'] %>
+direct_addressing 										= 		1
+plugin.<%= scope['middlle_connector'] %>.vhost 			= 		<%= scope['middlle_vhost'] %>
+plugin.<%= scope['middlle_connector'] %>.pool.size 		= 		1
+plugin.<%= scope['middlle_connector'] %>.pool.1.host 	= 		<%= @fqdn %>
+plugin.<%= scope['middlle_connector'] %>.pool.1.port 	= 		<%= scope['middlle_port'] %>
+plugin.<%= scope['middlle_connector'] %>.pool.1.user 	= 		<%= scope['middlle_user'] %>
+plugin.<%= scope['middlle_connector'] %>.pool.1.password = 		<%= scope['middlle_pwdserveur'] %>
+plugin.<%= scope['middlle_connector'] %>.heartbeat_interval 				= 		30
+
+
+# -----------------------------------
+# CONFIGURATION MIDDLEWARE FOR CLUSTERING
+# -----------------------------------
+#plugin.<%= scope['middlle_connector'] %>.stomp_1_0_fallback 	= 		0
+#plugin.<%= scope['middlle_connector'] %>.max_hbread_fails 		= 		2
+#plugin.<%= scope['middlle_connector'] %>.max_hbrlck_fails 		= 		0
+
+
+# -----------------------------------
+# CONFIGURATION MIDDLEWARE FOR USING SSL
+# -----------------------------------
+#plugin.<%= scope['middlle_connector'] %>.pool.1.ssl 		= 	1
+#plugin.<%= scope['middlle_connector'] %>.pool.1.ssl.ca 	= 	/var/lib/puppet/ssl/certs/ca.pem
+#plugin.<%= scope['middlle_connector'] %>.pool.1.ssl.cert 	= 	/var/lib/puppet/ssl/certs/pc-phobos.localdomain.pem
+#plugin.<%= scope['middlle_connector'] %>.pool.1.ssl.key 	= 	/var/lib/puppet/ssl/private_keys/phobos.localdomain.pem
+#plugin.<%= scope['middlle_connector'] %>.pool.1.ssl.fallback = 	0
+
+
+# -----------------------------------
+#SECURITY PLUGIN SETTINGS PSK ,SSL ou AES_SECURITY
+# -----------------------------------
+securityprovider 								= 		psk	
+	
+# SSL plugin settings:
+#plugin.ssl_client_cert_dir 					= 		/etc/mcollective.d/clients
+#plugin.ssl_server_private 						= 		/etc/mcollective.d/server_private.pem
+#plugin.ssl_server_public 						= 		/etc/mcollective.d/server_public.pem
+
+# PSK plugin settings: (unset)
+plugin.psk 										= 		<%= scope['middlle_Keypsk'] %>
+
+
+# ------------------------------------------
+# RECOMMENDED FEATURES:
+# ------------------------------------------
+factsource 										= 		yaml
+plugin.yaml 									= 		/etc/mcollective/facts.yaml
+#fact_cache_time 								= 		300
+#plugin.facter.facterlib 						= 		/var/lib/puppet/lib/facter
+identity 										= 		<%= @fqdn %>
+classesfile 									= 		/var/lib/puppet/classes.txt
+
+
+# ------------------------------------------
+# Registration (recommended):
+# ------------------------------------------
+# Temps entre chaque envoi de message
+registerinterval 								= 		600
+#registration_splay 							= 		true
+#registration 									= 		agentlist
+#registration_collective 						= 		mcollective
+
+
+# ------------------------------------------
+# Auditing (optional):
+# ------------------------------------------
+#rpcaudit 										= 		1
+#rpcauditprovider 								= 		logfile
+#plugin.rpcaudit.logfile 						= 		/var/log/mcollective-audit.log
+
+
+# ------------------------------------------
+# Authorization (optional):
+# ------------------------------------------
+#rpcauthorization 								= 		1
+#rpcauthprovider 								= 		action_policy
+
+
+# ------------------------------------------
+# Logging:
+# ------------------------------------------
+logger_type 									= 		file
+loglevel 										= 		warn
+logfile 										= 		/var/log/mcollective.log
+keeplogs 										= 		5
+max_log_size 									= 		2097152
+logfacility 									= 		daemon   # = user
+
+
+
+# ------------------------------------------
+# CONFIGURATION PUPPET AGENT
+# ------------------------------------------
+plugin.puppetd.puppetd 							= 		/usr/sbin/puppetd
+plugin.puppetd.lockfile 						= 		/var/lib/puppet/state/puppetdlock
+plugin.puppetd.statefile 						= 		/var/lib/puppet/state/state.yaml
+plugin.puppet.pidfile 							= 		/var/run/puppet/agent.pid
+plugin.puppetd.splaytime 						= 		100
+plugin.puppet.summary 							= 		/var/lib/puppet/state/last_run_summary.yaml

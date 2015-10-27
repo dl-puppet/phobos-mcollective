@@ -1,0 +1,22 @@
+{
+  "name": "phobos-mcollective",
+  "version": "0.1.0",
+  "author": "david levray",
+  "summary": "",
+  "license": "",
+  "source": "",
+  "project_page": "https://github.com/dl-puppet/phobos-mcollective",
+  "issues_url": null,
+  "operatingsystem_support": [
+  
+  ],
+  "requirements": [
+  
+  ],
+  "tags": [
+  
+  ],
+  "dependencies": [
+  
+  ]
+}
