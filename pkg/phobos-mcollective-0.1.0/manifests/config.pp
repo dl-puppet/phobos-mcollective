@@ -19,6 +19,11 @@ class mcollective::config inherits mcollective
 		        '/etc/mcollective/client.cfg' :
 		        content     => template("mcollective/client.cfg.erb"),
 		        mode       =>  "640",
+
+		        # COMPLETION BASH:
+				#Mcollective fournit un plugin pour bash pour permettre l'achèvement de ligne de commande.
+				#cd marionette-collective-2.5.3
+				#cp ext/bash/mco_completion.sh /etc/bash_completion.d/
 	        }  
 		}
 
@@ -68,7 +73,7 @@ class mcollective::config inherits mcollective
 				                ignore => '.git',
 				                backup => false;
 
-				                 #  ATTENTION !!!!!!!!!!!!!!! Ne pas utiliser "mcollective-facter-facts":  ensure uninstall
+				                 #  ATTENTION !!! Ne pas utiliser "mcollective-facter-facts":  ensure uninstall
 				                "/usr/libexec/mcollective/mcollective/facts" :
 				                ensure => directory,
 				                source => ["puppet:///modules/mcollective/facts"],

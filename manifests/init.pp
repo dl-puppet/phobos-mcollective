@@ -23,16 +23,12 @@ class mcollective
   $service_hasrestart           = $mcollective::params::service_hasrestart,
 
 
-  ###### CONFIG_FILES ###### 
-  $file_name                    = $mcollective::params::file_name,    
-  $file_path                    = $mcollective::params::file_path,     
-  $file_ensure                  = $mcollective::params::file_ensure,      
-  $file_backup                  = $mcollective::params::file_backup,      
-  $file_content                 = $mcollective::params::file_content,          
+  ###### CONFIG_FILES ######    
+  $file_ensure                  = $mcollective::params::file_ensure,
   $file_group                   = $mcollective::params::file_group,        
   $file_mode                    = $mcollective::params::file_mode,        
-  $file_owner                   = $mcollective::params::file_owner,       
-
+  $file_owner                   = $mcollective::params::file_owner,        
+  $file_backup                  = $mcollective::params::file_backup,      
 
 
 # -----------------------------------
@@ -72,10 +68,10 @@ $middlle_securityprovider       = $mcollective::params::middlle_securityprovider
 
 
   anchor { 'mcollective::begin': } ->
-    class { '::mcollective::install': } ->
-    class { '::mcollective::config': } ->
-    class { '::mcollective::service': } ->
-    class { '::mcollective::user': } ->
+    class { '::mcollective::install': } 
+    class { '::mcollective::config': } 
+    class { '::mcollective::service': } 
+    class { '::mcollective::user': } 
   anchor { 'mcollective::end': }
  		  
 }

@@ -3,7 +3,7 @@
   "dependencies": [],
   "license": "",
   "name": "phobos-mcollective",
-  "operatingsystem_support": redhat,centos],
+  "operatingsystem_support": [],
   "project_page": "https://github.com/dl-puppet/phobos-mcollective",
   "requirements": [],
   "source": "",

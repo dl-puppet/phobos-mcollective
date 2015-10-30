@@ -1,7 +1,7 @@
 {
   "README/MCOLLECTIVE.docx": "80dc0218e14522e6b74b3a5b313317ec",
   "README/MCOMASTER.docx": "9a2b40f0f320376d261af4e354e58355",
-  "README.md": "509219c5144e4dcdac1c112b511c266d",
+  "README.md": "5d6fa1b3e3219d23de5d15cf4dfa3a82",
   "files/agent/filemgr.ddl": "506cc7965ef33619bcf80119b73555b1",
   "files/agent/filemgr.rb": "327dacb564b8d682dea321fc31b7a527",
   "files/agent/iptables.ddl": "b33dab487ebd8890b7ad412f5b955669",
@@ -30,16 +30,16 @@
   "files/application/shell.rb": "10a246ba8cb83fd91b96a373aac8ebb1",
   "files/application/yum.rb": "60947123f028770dfa7a555fd7f2b966",
   "files/mco_completion.sh.txt": "fb4e0eda12f15711e7300add670b35a0",
-  "manifests/config.pp": "e48df24bcf2ec0eda52e07fa759f1f91",
-  "manifests/init.pp": "f6bc572d5f028b553436e27f7404e13f",
-  "manifests/install.pp": "2da1cda785c1ea135003ff76294e7913",
-  "manifests/params.pp": "1c85b2a6150b76df92f7986d0e9261c7",
+  "manifests/config.pp": "25b83e158b9422b48d378a2afb2dbef0",
+  "manifests/init.pp": "b00786ef7541a3d3b8e9104e8bf59668",
+  "manifests/install.pp": "ff011c13a12da290972e27e085bc0db2",
+  "manifests/params.pp": "9ce2db2a30a7661601201bcd968bc48f",
   "manifests/service.pp": "29c93c8c36070ab63b0ec966a2fdb58b",
   "manifests/user.pp": "348bd6108479b0bdd239ff7d07013fcf",
   "metadata.json": "5def642292303544204ea1cf4dfc0665",
   "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
   "spec/spec_helper.rb": "3ea886dd135e120afa31e0aab12e85b0",
-  "templates/client.cfg.erb": "57e92bef2dbfb549779d99f8166d3748",
+  "templates/client.cfg.erb": "923f1e70f21e17b8bd1148c64640ee3a",
   "templates/facts.yaml.erb": "d41d8cd98f00b204e9800998ecf8427e",
-  "templates/server.cfg.erb": "dc9ef9a2517c474d7d724a673a13988e"
+  "templates/server.cfg.erb": "da8fe8cc22962962082d53f5c40efada"
 }

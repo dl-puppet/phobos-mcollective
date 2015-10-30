@@ -23,27 +23,26 @@ class mcollective
   $service_hasrestart           = $mcollective::params::service_hasrestart,
 
 
-  ###### CONFIG_FILES ###### 
-  $file_name                    = $mcollective::params::file_name,    
-  $file_path                    = $mcollective::params::file_path,     
-  $file_ensure                  = $mcollective::params::file_ensure,      
-  $file_backup                  = $mcollective::params::file_backup,      
-  $file_content                 = $mcollective::params::file_content,          
+  ###### CONFIG_FILES ######    
+  $file_ensure                  = $mcollective::params::file_ensure,
   $file_group                   = $mcollective::params::file_group,        
   $file_mode                    = $mcollective::params::file_mode,        
-  $file_owner                   = $mcollective::params::file_owner,       
-
+  $file_owner                   = $mcollective::params::file_owner,        
+  $file_backup                  = $mcollective::params::file_backup,      
 
 
 # -----------------------------------
 # CONFIGURATION MIDDLEWARE 
 # -----------------------------------
-$middlle_connector              = "rabbitmq" , #activemq
-$middlle_vhost                  = "/mcollective",
-$middlle_port                   = "61613",
-$middlle_user                   = "mcollective",
-$middlle_password               = "marionette",
-
+$middlle_libdir                 = $mcollective::params::middlle_libdir,
+$middlle_connector              = $mcollective::params::middlle_connector, 
+$middlle_vhost                  = $mcollective::params::middlle_vhost,
+$middlle_port                   = $mcollective::params::middlle_port,
+$middlle_user                   = $mcollective::params::middlle_user,
+$middlle_pwdclient              = $mcollective::params::middlle_pwdclient, 
+$middlle_pwdserveur             = $mcollective::params::middlle_pwdserveur,
+$middlle_Keypsk                 = $mcollective::params::middlle_Keypsk,
+$middlle_securityprovider       = $mcollective::params::middlle_securityprovider, 
 
 
 ) inherits mcollective::params  
@@ -69,10 +68,10 @@ $middlle_password               = "marionette",
 
 
   anchor { 'mcollective::begin': } ->
-    class { '::mcollective::install': } ->
-    class { '::mcollective::config': } ->
-    class { '::mcollective::service': } ->
-    class { '::mcollective::user': } ->
+    class { '::mcollective::install': } 
+    class { '::mcollective::config': } 
+    class { '::mcollective::service': } 
+    class { '::mcollective::user': } 
   anchor { 'mcollective::end': }
  		  
 }

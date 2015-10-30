@@ -11,7 +11,7 @@ daemonize 										= 		1
 #activate_agents 								= 		true
 #soft_shutdown 									= 		false
 #soft_shutdown_timeout 							= 		5
-libdir 											= 		/usr/libexec/mcollective
+libdir 											= 		<%= scope['middlle_libdir'] %>
 #ssl_cipher 									= 		aes-256-cbc
 
 
@@ -25,33 +25,33 @@ libdir 											= 		/usr/libexec/mcollective
 # -----------------------------------
 # CONFIGURATION MIDDLEWARE
 # -----------------------------------
-connector 										= 		rabbitmq
-direct_addressing 								= 		1
-plugin.rabbitmq.vhost 							= 		/mcollective
-plugin.rabbitmq.pool.size 						= 		1
-plugin.rabbitmq.pool.1.host 					= 		mcl-rec-appv1.adm.parimutuel.local
-plugin.rabbitmq.pool.1.port 					= 		61613
-plugin.rabbitmq.pool.1.user 					= 		mcollective
-plugin.rabbitmq.pool.1.password 				= 		marionette
-plugin.rabbitmq.heartbeat_interval 				= 		30
+connector 												= 		<%= scope['middlle_connector'] %>
+direct_addressing 										= 		1
+plugin.<%= scope['middlle_connector'] %>.vhost 			= 		<%= scope['middlle_vhost'] %>
+plugin.<%= scope['middlle_connector'] %>.pool.size 		= 		1
+plugin.<%= scope['middlle_connector'] %>.pool.1.host 	= 		<%= @fqdn %>
+plugin.<%= scope['middlle_connector'] %>.pool.1.port 	= 		<%= scope['middlle_port'] %>
+plugin.<%= scope['middlle_connector'] %>.pool.1.user 	= 		<%= scope['middlle_user'] %>
+plugin.<%= scope['middlle_connector'] %>.pool.1.password = 		<%= scope['middlle_pwdserveur'] %>
+plugin.<%= scope['middlle_connector'] %>.heartbeat_interval 				= 		30
 
 
 # -----------------------------------
 # CONFIGURATION MIDDLEWARE FOR CLUSTERING
 # -----------------------------------
-#plugin.rabbitmq.stomp_1_0_fallback 			= 		0
-#plugin.rabbitmq.max_hbread_fails 				= 		2
-#plugin.rabbitmq.max_hbrlck_fails 				= 		0
+#plugin.<%= scope['middlle_connector'] %>.stomp_1_0_fallback 	= 		0
+#plugin.<%= scope['middlle_connector'] %>.max_hbread_fails 		= 		2
+#plugin.<%= scope['middlle_connector'] %>.max_hbrlck_fails 		= 		0
 
 
 # -----------------------------------
 # CONFIGURATION MIDDLEWARE FOR USING SSL
 # -----------------------------------
-#plugin.rabbitmq.pool.1.ssl 					= 		1
-#plugin.rabbitmq.pool.1.ssl.ca 					= 		/var/lib/puppet/ssl/certs/ca.pem
-#plugin.rabbitmq.pool.1.ssl.cert 				= 		/var/lib/puppet/ssl/certs/pc-phobos.localdomain.pem
-#plugin.rabbitmq.pool.1.ssl.key 				= 		/var/lib/puppet/ssl/private_keys/pc-phobos.localdomain.pem
-#plugin.rabbitmq.pool.1.ssl.fallback 			= 		0
+#plugin.<%= scope['middlle_connector'] %>.pool.1.ssl 		= 	1
+#plugin.<%= scope['middlle_connector'] %>.pool.1.ssl.ca 	= 	/var/lib/puppet/ssl/certs/ca.pem
+#plugin.<%= scope['middlle_connector'] %>.pool.1.ssl.cert 	= 	/var/lib/puppet/ssl/certs/pc-phobos.localdomain.pem
+#plugin.<%= scope['middlle_connector'] %>.pool.1.ssl.key 	= 	/var/lib/puppet/ssl/private_keys/phobos.localdomain.pem
+#plugin.<%= scope['middlle_connector'] %>.pool.1.ssl.fallback = 	0
 
 
 # -----------------------------------
@@ -65,7 +65,7 @@ securityprovider 								= 		psk
 #plugin.ssl_server_public 						= 		/etc/mcollective.d/server_public.pem
 
 # PSK plugin settings: (unset)
-plugin.psk 										= 		password_psk
+plugin.psk 										= 		<%= scope['middlle_Keypsk'] %>
 
 
 # ------------------------------------------
@@ -82,7 +82,7 @@ classesfile 									= 		/var/lib/puppet/classes.txt
 # ------------------------------------------
 # Registration (recommended):
 # ------------------------------------------
-# Temp Ã©ulÃ©ntre chaque envoi de message
+# Temps entre chaque envoi de message
 registerinterval 								= 		600
 #registration_splay 							= 		true
 #registration 									= 		agentlist

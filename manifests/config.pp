@@ -73,7 +73,7 @@ class mcollective::config inherits mcollective
 				                ignore => '.git',
 				                backup => false;
 
-				                 #  ATTENTION !!!!!!!!!!!!!!! Ne pas utiliser "mcollective-facter-facts":  ensure uninstall
+				                 #  ATTENTION !!! Ne pas utiliser "mcollective-facter-facts":  ensure uninstall
 				                "/usr/libexec/mcollective/mcollective/facts" :
 				                ensure => directory,
 				                source => ["puppet:///modules/mcollective/facts"],

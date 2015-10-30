@@ -28,19 +28,19 @@ class mcollective::params
 	$file_ensure            = 'file'  
 	$file_group             = '0' 
 	$file_mode              = '0640' 
-	$file_owner             = 'wheel'  
+	$file_owner             = 'mcollective'  
 	$file_backup            = '.puppet-bak'  
 
 
 	# CONFIGURATION MIDDLEWARE 
 	$middlle_libdir                 = "/usr/libexec/mcollective"
-	$middlle_connector              = "rabbitmq" , #activemq
-	$middlle_vhost                  = "/mcollective",
-	$middlle_port                   = "61613",
-	$middlle_user                   = "mcollective",
-	$middlle_pwdclient              = "3O9oV8C9VuYhs/zCpOsvOXZwGRtdDzVQyPYawpNeBEg=",
+	$middlle_connector              = "rabbitmq" #activemq
+	$middlle_vhost                  = "/mcollective"
+	$middlle_port                   = "61613"
+	$middlle_user                   = "mcollective"
+	$middlle_pwdclient              = "3O9oV8C9VuYhs/zCpOsvOXZwGRtdDzVQyPYawpNeBEg="
 	$middlle_pwdserveur             = "li4/JW+z3LGHMN3B8h0cw60XAwjL5NhcLYSqnYEyXTY="
 	$middlle_Keypsk                 = "w3QqoR20w6eDMw73q3wD/ngqPLxo/sR9NPNE3MCDXOA="
-	$middlle_securityprovider       = "psk"  
+	$middlle_securityprovider       = "psk"
 
 }
